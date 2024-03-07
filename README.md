@@ -77,7 +77,46 @@ This project leverages a diverse set of modern technologies and tools to ensure 
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+To use this service, we have exposed an endpoint on AWS. 
+```sh
+/create-user-summary/{filename}/{account} 
+```
+```txt
+Where "filename" should be the filename without the .csv extension
+
+And "account" should be an existing account in our DB.
+```
+
+Is will send the summary email to the email associated with the acount
+```sh
+For filename use test
+```
+If you want to use diferent file we should upload the file to the S3 bucket first 
+
+Endpoint:
+```sh
+http://a3e09f24fe9284289abddadf695d0ced-1102330508.us-east-1.elb.amazonaws.com/create-user-summary/{filename}/{account}
+```
+
+Example :
+```sh
+http://a3e09f24fe9284289abddadf695d0ced-1102330508.us-east-1.elb.amazonaws.com/create-user-summary/test/839755
+```
+
+| User Account | email |
+| -------- | -------- |
+| 947368     | asce616@gmail.com     |
+| 839755 | alfonso.medina@storicard.com |
+
+With the account number 839755, the email will be sent to the recruiter Alfonso Medina at alfonso.medina@storicard.com. If you want the email to be sent to a specific address, please send a message to request adding it to the database for email delivery. Currently, this functionality is beyond the scope of the project.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Local usage
 
 Before you begin, ensure you have the following prerequisites:
 
@@ -89,6 +128,31 @@ Before you begin, ensure you have the following prerequisites:
   - Docker Compose
 
 ### Installation
+
+#### Fast local installation
+
+For fast local testing you can pull the dockerized application from a DockerHub account and just run it locally.
+
+1. Use the DockerHub image:
+   ```sh
+   docker pull asce616/stori
+   ```
+2. Check the image status and note the image ID:
+   ```sh
+   docker images -a
+   ```
+3.  Run the Docker image:
+   ```sh
+   docker run -p 127.0.0.1:8080:8080 [IMAGE_ID]
+   ```
+
+4. Test as before but use these endpoint
+Endpoint:
+```sh
+localhost:8080/create-user-summary/{filename}/{account}
+```
+
+#### Slow Local installation
 
 Follow these steps to set up and run the application:
 
@@ -105,19 +169,24 @@ Follow these steps to set up and run the application:
    ```sh
    docker-compose up
    ```
-4. Alternatively, you can use the DockerHub image:
+4. Check the image status and note the image ID:
    ```sh
-   docker pull asce616/stori
+   docker images -a
    ```
-5. Check the image status and note the image ID:
-   ```sh
-   docker pull asce616/stori
-   ```
-6. Run the Docker image:
+5. Run the Docker image:
    ```sh
    docker run -p 127.0.0.1:8080:8080 [IMAGE_ID]
    ```
-If running natively from step 2, skip this Docker step.
+#### local installation (No docker)
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Argenis616/storyChallenge.git
+   ```
+2. Open and complete the information in the following files:
+   ```sh
+   vi ~/stori/app/common/config.py
+   vi ~/stori/credentials
 
 3. Activate the virtual environment:
    ```sh
@@ -132,33 +201,23 @@ If running natively from step 2, skip this Docker step.
    uvicorn main:app --reload
    ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-To use this service, we have exposed an endpoint on AWS. create-user-summary is our service, test is the filename without the .csv extension, and 839755 is the customer's account number.
-
-Example Endpoint:
-```sh
-http://a3e09f24fe9284289abddadf695d0ced-1102330508.us-east-1.elb.amazonaws.com/create-user-summary/test/839755
-```
-With the account number 839755, the email will be sent to the recruiter Alfonso Medina at alfonso.medina@storicard.com. If you want the email to be sent to a specific address, please send a message to request adding it to the database for email delivery. Currently, this functionality is beyond the scope of the project.
+Note: 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
 
 
 
 <!-- Desinge -->
-## Desinge
+## Architecture Design
 
 <div align="center">
   <a>
     <img src="https://onedrive.live.com/embed?resid=C1439FE57082E86A%21136631&authkey=%21ADX7H3nMLKzQ2mo&width=831&height=971" width="400" height="500" />
   </a>
-  <h3 align="center">System Desinge</h3>
+
 </div>
 
 ### Resquest flow
